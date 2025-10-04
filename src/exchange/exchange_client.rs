@@ -50,7 +50,7 @@ where
     state.end()
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExchangePayload {
     action: serde_json::Value,
