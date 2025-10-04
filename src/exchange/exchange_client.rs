@@ -39,7 +39,7 @@ pub struct ExchangeClient {
     pub coin_to_asset: HashMap<String, u32>,
 }
 
-fn serialize_sig<S>(sig: &Signature, s: S) -> std::result::Result<S::Ok, S::Error>
+pub fn serialize_sig<S>(sig: &Signature, s: S) -> std::result::Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
@@ -52,7 +52,7 @@ where
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct ExchangePayload {
+pub struct ExchangePayload {
     action: serde_json::Value,
     #[serde(serialize_with = "serialize_sig")]
     signature: Signature,
@@ -84,7 +84,7 @@ pub enum Actions {
 }
 
 impl Actions {
-    fn hash(&self, timestamp: u64, vault_address: Option<Address>) -> Result<B256> {
+    pub fn hash(&self, timestamp: u64, vault_address: Option<Address>) -> Result<B256> {
         let mut bytes =
             rmp_serde::to_vec_named(self).map_err(|e| Error::RmpParse(e.to_string()))?;
         bytes.extend(timestamp.to_be_bytes());
